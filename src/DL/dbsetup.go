@@ -15,6 +15,12 @@ type TodoList struct{
     Listname string `json:"listName"`
 }
 
+type Todo struct{
+    Id int `json:"id"`
+    Todolistid int `json:"todoListId"`
+    Taskname string `json:"taskName"`
+}
+
 func InitialSetup(){
     database, error := sql.Open("sqlite3", "./todolist.db")
     if error != nil{
@@ -85,4 +91,41 @@ func DeleteTodoListItem(taskIdToDelete int){
     if error != nil{
         log.Fatal(error)
     }
+}
+
+func CreateTask(todo Todo){
+    database, error := sql.Open("sqlite3", "./todolist.db")
+    if error != nil{
+        log.Fatal(error)
+    }
+
+    statement, error := database.Prepare("INSERT INTO todos (todolistid, taskname) VALUES (?, ?)")
+    statement.Exec(todo.Todolistid, todo.Taskname)
+    if error != nil{
+        log.Fatal(error)
+    }
+}
+
+func GetTodos() ([]Todo, error) {
+    database, error := sql.Open("sqlite3", "./todolist.db")
+    if error != nil{
+        log.Fatal(error)
+        return nil, error
+    }
+    var todos []Todo
+
+    rows, error := database.Query("SELECT todolistid, taskname FROM todos")
+    var todolistid int
+    var taskname string
+    var todoitem Todo
+
+    for rows.Next() {
+        rows.Scan(&todolistid, &taskname)
+        todoitem.Todolistid = todolistid
+        todoitem.Taskname = taskname
+
+        todos = append(todos, todoitem)
+    }
+
+    return todos, nil
 }
