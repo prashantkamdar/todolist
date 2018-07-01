@@ -6,8 +6,8 @@ import (
     //"strconv"
     "database/sql"
     "log"
-	
-	_ "github.com/mattn/go-sqlite3"
+
+    _ "github.com/mattn/go-sqlite3"
 )
 
 type TodoList struct{
@@ -17,19 +17,19 @@ type TodoList struct{
 
 func InitialSetup(){
     database, error := sql.Open("sqlite3", "./todolist.db")
-    if error!=nil{
+    if error != nil{
         log.Fatal(error)
     }
     
     statement, error := database.Prepare("CREATE TABLE IF NOT EXISTS todolist (id INTEGER PRIMARY KEY AUTOINCREMENT, listname TEXT)")
     statement.Exec()
-    if error!=nil{
+    if error != nil{
         log.Fatal(error)
     }
 
     statement, error = database.Prepare("CREATE TABLE IF NOT EXISTS todos (id INTEGER PRIMARY KEY AUTOINCREMENT, todolistid INTEGER, taskname TEXT, FOREIGN KEY(todolistid) REFERENCES todolist(id))")
     statement.Exec()
-    if error!=nil{
+    if error != nil{
         log.Fatal(error)
     }
 
@@ -39,7 +39,7 @@ func InitialSetup(){
 
 func GetTodoList() ([]TodoList, error) {
     database, error := sql.Open("sqlite3", "./todolist.db")
-    if error!=nil{
+    if error != nil{
         log.Fatal(error)
         return nil, error
     }
@@ -61,12 +61,28 @@ func GetTodoList() ([]TodoList, error) {
     return todolist, nil
 }
 
-func CreateTodoList(todolistitem TodoList) {
+func CreateTodoListItem(todolistitem TodoList) {
     database, error := sql.Open("sqlite3", "./todolist.db")
-    if error!=nil{
+    if error != nil{
         log.Fatal(error)
     }
 
-    statement, _ := database.Prepare("INSERT INTO todolist (listname) VALUES (?)")
+    statement, error := database.Prepare("INSERT INTO todolist (listname) VALUES (?)")
     statement.Exec(todolistitem.Listname)
+    if error != nil{
+        log.Fatal(error)
+    }
+}
+
+func DeleteTodoListItem(taskIdToDelete int){
+    database, error := sql.Open("sqlite3", "./todolist.db")
+    if error != nil{
+        log.Fatal(error)
+    }
+
+    statement, error := database.Prepare("DELETE FROM todolist WHERE id = ?")
+    statement.Exec(taskIdToDelete)
+    if error != nil{
+        log.Fatal(error)
+    }
 }

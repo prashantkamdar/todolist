@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	//"fmt"
 	"net/http"
-	//"strconv"
+	"strconv"
 		
 	"github.com/gorilla/mux"
 	"github.com/prashantkamdar/todolist/src/DL"
@@ -22,7 +22,14 @@ func GetTodoList(w http.ResponseWriter, r *http.Request) {
 func CreateTodoListItem(w http.ResponseWriter, r *http.Request) {
     var todolistitem dbsetup.TodoList
 	_ = json.NewDecoder(r.Body).Decode(&todolistitem)
-	dbsetup.CreateTodoList(todolistitem)
+	dbsetup.CreateTodoListItem(todolistitem)
+	json.NewEncoder(w).Encode("success")
+}
+
+func DeleteTodoList(w http.ResponseWriter, r *http.Request) {
+    params := mux.Vars(r)
+	taskIdToDelete,_ :=  strconv.Atoi(params["id"])
+	dbsetup.DeleteTodoListItem(taskIdToDelete)
 	json.NewEncoder(w).Encode("success")
 }
 
@@ -31,5 +38,6 @@ func main() {
 	router := mux.NewRouter()
 	router.HandleFunc("/todolist", GetTodoList).Methods("GET")
 	router.HandleFunc("/createlist", CreateTodoListItem).Methods("POST")
+	router.HandleFunc("/todolist/{id}", DeleteTodoList).Methods("DELETE")
 	http.ListenAndServe(":1337", router)
 }
