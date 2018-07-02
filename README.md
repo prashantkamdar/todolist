@@ -19,18 +19,34 @@ Method: `GET` \
 Sample call: `curl -X GET http://localhost:1337/todolist`
 
 ##### *Delete a todolist*
-Path: `/todolist` \
+Path: `/todolist/{todolistid}` \
 Method: `DELETE` \
-URL params: `<todolistid>`
+URL params: `<todolistid>` \
 Sample call: `curl -X DELETE http://localhost:1337/todolist/7`
 
 ##### *Create a task under one of the todolist item*
+Path: `/todos/{todolistid}` \
+Method: `POST` \
+URL params: `<todolistid>` \
+Data: `{"taskName": "<task_name>"}` \
+Sample call: `curl -X POST http://localhost:1337/todos/1 -d '{"taskName": "Sample task name"}'`
 
 ##### *Update a todolist under one of the todolist item*
+Path: `/todos` \
+Method: `PUT` \
+Data: `{"id": <todo_id>, "todoListId":<new_todo_list_id>, "taskName":"<new_task_name>"}` \
+Sample call: `curl -X PUT http://localhost:1337/todos -d '{"id": 1, "todoListId":1, "taskName":"just updated this"}'`
 
 ##### *Delete a task under one of the todolist item*
+Path: `/todos/{todolistid}` \
+Method: `DELETE` \
+URL params: `<todolistid>` \
+Sample call: `curl -X DELETE http://localhost:1337/todos/7`
 
 ##### *Get all todos*
+Path: `/todos` \
+Method: `GET` \
+Sample call: `curl -X GET http://localhost:1337/todos`
 
 #### TODO
 1. Use HTTP status codes for API return values
@@ -41,3 +57,4 @@ Sample call: `curl -X DELETE http://localhost:1337/todolist/7`
 6. Dockerize the app
 7. Host the app on private VPS for working demo
 8. Password protect the APIs
+9. Add `bool` to track whether todo is completed or no
