@@ -58,3 +58,4 @@ Sample call: `curl -X GET http://localhost:1337/todos`
 7. Host the app on private VPS for working demo
 8. Password protect the APIs
 9. Add `bool` to track whether todo is completed or no
+10. Write a common logger
