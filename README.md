@@ -24,3 +24,7 @@ It consists of 2 tables with PK-FK relationship: `todolist` & `todos`.\
 2. Correct the PK-FK relationship in SQLite
 3. Create universal DB object and pass it around instead of initialising everytime
 4. Add a free-to-use educational license
+5. Lowercase the folder `DL`
+6. Dockerize the app
+7. Host the app on private VPS for working demo
+8. Password protect the APIs 
