@@ -7,21 +7,30 @@ It consists of 2 tables with PK-FK relationship: `todolist` & `todos`.\
 
 #### Usage
 
-##### Create a todolist
+##### *Create a todolist*
 Path: `/todolist` \
 Method: `POST` \
 Data: `{"listName":"<list_name>"}` \
 Sample call: `curl -X POST http://localhost:1337/todolist -d '{"listName":"Sample todo list"}'`
 
 ##### *Get all todolist items*
+Path: `/todolist` \
+Method: `GET` \
+Sample call: `curl -X GET http://localhost:1337/todolist`
 
-##### Create a task under one of the todolist item
+##### *Delete a todolist*
+Path: `/todolist` \
+Method: `DELETE` \
+URL params: `<todolistid>`
+Sample call: `curl -X DELETE http://localhost:1337/todolist/7`
 
-##### Update a todolist under one of the todolist item
+##### *Create a task under one of the todolist item*
 
-##### Delete a task under one of the todolist item
+##### *Update a todolist under one of the todolist item*
 
-##### Delete a todolist
+##### *Delete a task under one of the todolist item*
+
+##### *Get all todos*
 
 #### TODO
 1. Use HTTP status codes for API return values
@@ -31,4 +40,4 @@ Sample call: `curl -X POST http://localhost:1337/todolist -d '{"listName":"Sampl
 5. Lowercase the folder `DL`
 6. Dockerize the app
 7. Host the app on private VPS for working demo
-8. Password protect the APIs 
+8. Password protect the APIs
