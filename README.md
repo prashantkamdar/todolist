@@ -1,11 +1,9 @@
 ## A simple todolist in GO
 
 #### Description
-The application uses SQLite as its persistence layer.
-
-It consists of 2 tables with PK-FK relationship: `todolist` & `todos`.
-
-`main.go` initializes the db and inserts dummy data into it (data insertion commented).
+The application uses SQLite as its persistence layer.\
+It consists of 2 tables with PK-FK relationship: `todolist` & `todos`.\
+`main.go` initializes the db and inserts dummy data into it (data insertion commented).\
 
 #### Usage
 
