@@ -1,9 +1,6 @@
 package dbsetup
 
 import (
-	//"errors"
-	//"fmt"    
-    //"strconv"
     "database/sql"
     "log"
 
@@ -27,20 +24,41 @@ func InitialSetup(){
         log.Fatal(error)
     }
     
-    statement, error := database.Prepare("CREATE TABLE IF NOT EXISTS todolist (id INTEGER PRIMARY KEY AUTOINCREMENT, listname TEXT)")
+    statement, error := database.Prepare(`CREATE TABLE IF NOT EXISTS todolist
+        (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            listname TEXT,
+            updatedate DATETIME DEFAULT CURRENT_TIMESTAMP
+        )`)
     statement.Exec()
     if error != nil{
         log.Fatal(error)
     }
 
-    statement, error = database.Prepare("CREATE TABLE IF NOT EXISTS todos (id INTEGER PRIMARY KEY AUTOINCREMENT, todolistid INTEGER, taskname TEXT, FOREIGN KEY(todolistid) REFERENCES todolist(id))")
+    statement, error = database.Prepare(`CREATE TABLE IF NOT EXISTS todos
+        (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            todolistid INTEGER,
+            taskname TEXT,
+            updatedate DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY(todolistid) REFERENCES todolist(id)
+        )`)
     statement.Exec()
     if error != nil{
         log.Fatal(error)
     }
-
+    
+    //dummy data
     // statement, _ = database.Prepare("INSERT INTO todolist (listname) VALUES (?)")
-    // statement.Exec("firsttask")
+    // statement.Exec("firstlist")
+    // statement, _ = database.Prepare("INSERT INTO todolist (listname) VALUES (?)")
+    // statement.Exec("secondlist")
+    // statement, _ = database.Prepare("INSERT INTO todos (todolistid,taskname) VALUES (?,?)")
+    // statement.Exec(1, "firstlistfirsttask")
+    // statement, _ = database.Prepare("INSERT INTO todos (todolistid,taskname) VALUES (?,?)")
+    // statement.Exec(1, "firstlistsecondtask")
+    // statement, _ = database.Prepare("INSERT INTO todos (todolistid,taskname) VALUES (?,?)")
+    // statement.Exec(2, "secondlistfirsttask")
 }
 
 func GetTodoList() ([]TodoList, error) {
@@ -114,13 +132,15 @@ func GetTodos() ([]Todo, error) {
     }
     var todos []Todo
 
-    rows, error := database.Query("SELECT todolistid, taskname FROM todos")
+    rows, error := database.Query("SELECT id, todolistid, taskname FROM todos")
+    var id int
     var todolistid int
     var taskname string
     var todoitem Todo
 
     for rows.Next() {
-        rows.Scan(&todolistid, &taskname)
+        rows.Scan(&id, &todolistid, &taskname)
+        todoitem.Id = id
         todoitem.Todolistid = todolistid
         todoitem.Taskname = taskname
 
@@ -128,4 +148,30 @@ func GetTodos() ([]Todo, error) {
     }
 
     return todos, nil
+}
+
+func DeleteTodo(todoIdToDelete int){
+    database, error := sql.Open("sqlite3", "./todolist.db")
+    if error != nil{
+        log.Fatal(error)
+    }
+
+    statement, error := database.Prepare("DELETE FROM todos WHERE id = ?")
+    statement.Exec(todoIdToDelete)
+    if error != nil{
+        log.Fatal(error)
+    }
+}
+
+func UpdateTodo(todo Todo){
+    database, error := sql.Open("sqlite3", "./todolist.db")
+    if error != nil{
+        log.Fatal(error)
+    }
+
+    statement, error := database.Prepare("UPDATE todos SET todolistid = ?, taskname = ? WHERE id = ?")
+    statement.Exec(todo.Todolistid, todo.Taskname, todo.Id)
+    if error != nil{
+        log.Fatal(error)
+    }
 }
