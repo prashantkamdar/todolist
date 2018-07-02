@@ -32,20 +32,19 @@ func GetTodos() ([]Todo, error) {
         log.Fatal(error)
         return nil, error
     }
-    var todos []Todo
 
-    rows, error := database.Query("SELECT id, todolistid, taskname FROM todos")
+    var todos []Todo
+    var todoitem Todo
     var id int
     var todolistid int
     var taskname string
-    var todoitem Todo
 
+    rows, error := database.Query("SELECT id, todolistid, taskname FROM todos")
     for rows.Next() {
         rows.Scan(&id, &todolistid, &taskname)
         todoitem.Id = id
         todoitem.Todolistid = todolistid
         todoitem.Taskname = taskname
-
         todos = append(todos, todoitem)
     }
 

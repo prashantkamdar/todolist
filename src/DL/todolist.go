@@ -18,18 +18,17 @@ func GetTodoList() ([]TodoList, error) {
         log.Fatal(error)
         return nil, error
     }
-    var todolist []TodoList
 
-    rows, error := database.Query("SELECT id, listname FROM todolist")
+    var todolist []TodoList
+    var todolistitem TodoList
     var id int
     var listname string
-    var todolistitem TodoList
 
+    rows, error := database.Query("SELECT id, listname FROM todolist")
     for rows.Next() {
         rows.Scan(&id, &listname)
         todolistitem.Id = id
         todolistitem.Listname = listname
-
         todolist = append(todolist, todolistitem)
     }
 
