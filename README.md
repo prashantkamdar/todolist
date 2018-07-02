@@ -8,12 +8,12 @@ It consists of 2 tables with PK-FK relationship: `todolist` & `todos`.\
 #### Usage
 
 ##### Create a todolist
-Path: /todolist \
-Method: POST \
-Data: {"listName":"<list_name>"} \
-Sample call: curl -X POST http://localhost:1337/todolist -d '{"listName":"Sample todo list"}'
+Path: `/todolist` \
+Method: `POST` \
+Data: `{"listName":"<list_name>"}` \
+Sample call: `curl -X POST http://localhost:1337/todolist -d '{"listName":"Sample todo list"}'`
 
-##### Get all todolist items
+##### *Get all todolist items*
 
 ##### Create a task under one of the todolist item
 
