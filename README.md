@@ -54,8 +54,8 @@ _**Try it:**_ `curl -X GET http://107.173.51.44/todos`
 3. Create universal DB object and pass it around instead of initialising everytime
 4. Add a free-to-use educational license
 5. Lowercase the folder `DL`
-6. Dockerize the app
-7. Host the app on private VPS for working demo
+6. ~~Dockerize the app~~
+7. ~~Host the app on private VPS for working demo~~
 8. Password protect the APIs
 9. Add `bool` to track whether todo is completed or no
 10. Write a common logger
