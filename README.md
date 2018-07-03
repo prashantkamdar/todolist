@@ -11,42 +11,42 @@ It consists of 2 tables with PK-FK relationship: `todolist` & `todos`.\
 Path: `/todolist` \
 Method: `POST` \
 Data: `{"listName":"<list_name>"}` \
-Sample call: `curl -X POST http://localhost:1337/todolist -d '{"listName":"Sample todo list"}'`
+_**Try it:**_ `curl -X POST http://107.173.51.44/todolist -d '{"listName":"Sample todo list"}'`
 
 ##### *Get all todolist items*
 Path: `/todolist` \
 Method: `GET` \
-Sample call: `curl -X GET http://localhost:1337/todolist`
+_**Try it:**_ `curl -X GET http://107.173.51.44/todolist`
 
 ##### *Delete a todolist*
 Path: `/todolist/{todolistid}` \
 Method: `DELETE` \
 URL params: `<todolistid>` \
-Sample call: `curl -X DELETE http://localhost:1337/todolist/7`
+_**Try it:**_ `curl -X DELETE http://107.173.51.44/todolist/7`
 
 ##### *Create a task under one of the todolist item*
 Path: `/todos/{todolistid}` \
 Method: `POST` \
 URL params: `<todolistid>` \
 Data: `{"taskName": "<task_name>"}` \
-Sample call: `curl -X POST http://localhost:1337/todos/1 -d '{"taskName": "Sample task name"}'`
+_**Try it:**_ `curl -X POST http://107.173.51.44/todos/1 -d '{"taskName": "Sample task name"}'`
 
 ##### *Update a todolist under one of the todolist item*
 Path: `/todos` \
 Method: `PUT` \
 Data: `{"id": <todo_id>, "todoListId":<new_todo_list_id>, "taskName":"<new_task_name>"}` \
-Sample call: `curl -X PUT http://localhost:1337/todos -d '{"id": 1, "todoListId":1, "taskName":"just updated this"}'`
+_**Try it:**_ `curl -X PUT http://107.173.51.44/todos -d '{"id": 1, "todoListId":1, "taskName":"just updated this"}'`
 
 ##### *Delete a task under one of the todolist item*
 Path: `/todos/{todolistid}` \
 Method: `DELETE` \
 URL params: `<todolistid>` \
-Sample call: `curl -X DELETE http://localhost:1337/todos/7`
+_**Try it:**_ `curl -X DELETE http://107.173.51.44/todos/7`
 
 ##### *Get all todos*
 Path: `/todos` \
 Method: `GET` \
-Sample call: `curl -X GET http://localhost:1337/todos`
+_**Try it:**_ `curl -X GET http://107.173.51.44/todos`
 
 #### TODO
 1. Use HTTP status codes for API return values
